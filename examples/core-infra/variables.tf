@@ -24,6 +24,6 @@ variable "namespaces" {
 variable "enable_nat_gw" {
   description = "Provision a NAT Gateway in the VPC"
   type        = bool
-  default     = true
+  default     = false
 
 }

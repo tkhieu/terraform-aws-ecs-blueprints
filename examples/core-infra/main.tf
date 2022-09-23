@@ -32,10 +32,7 @@ module "ecs" {
 
   cluster_configuration = {
     execute_command_configuration = {
-      logging = "OVERRIDE"
-      log_configuration = {
-        cloud_watch_log_group_name = aws_cloudwatch_log_group.this.name
-      }
+      logging = "NONE"
     }
   }
 
@@ -43,14 +40,14 @@ module "ecs" {
   fargate_capacity_providers = {
     FARGATE = {
       default_capacity_provider_strategy = {
-        weight = 1
-        base   = 1
+        weight = 0
+        base   = 0
       }
     }
     FARGATE_SPOT = {
       default_capacity_provider_strategy = {
-        weight = 0
-        base   = 0
+        weight = 1
+        base   = 1
       }
     }
   }
@@ -88,12 +85,12 @@ module "vpc" {
   tags = local.tags
 }
 
-resource "aws_cloudwatch_log_group" "this" {
-  name              = "/aws/ecs/${local.name}"
-  retention_in_days = 7
+# resource "aws_cloudwatch_log_group" "this" {
+#   name              = "/aws/ecs/${local.name}"
+#   retention_in_days = 1
 
-  tags = local.tags
-}
+#   tags = local.tags
+# }
 
 ################################################################################
 # Service discovery namespaces
